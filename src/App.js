@@ -1,43 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Security, SecureRoute, ImplicitCallback } from "@okta/okta-react";
+import Navigation from "./components/shared/Navigation";
+import HomePage from "./components/home/HomePage";
+import RegistrationForm from "./components/auth/RegistrationForm";
+import LoginPage from "./components/auth/LoginPage";
+import ProfilePage from "./components/auth/ProfilePage";
+import "./App.css";
 
-const list = [
-  {
-    title: 'React',
-    url: 'https://reactjs.org/',
-    author: 'Jordan Walke',
-    num_comments: 3,
-    points: 4,
-    objectID: 0,
-  },
-  {
-    title: 'Redux',
-    url: 'https://redux.js.org/',
-    author: 'Dan Abramov, Andrew Clark',
-    num_comments: 2,
-    points: 5,
-    objectID: 1,
-  },
-];
+const config = {
+  url: "https://dev-676030.okta.com",
+  issuer: "https://dev-676030.okta.com/oauth2/default",
+  redirect_uri: window.location.origin + "/implicit/callback",
+  client_id: "0oa39qqnrh2yHkQhE4x6"
+};
 
-function App() {
-  return (
-    <div className="App">
-      {list.map(function(item) {
-        return (
-          <div>
-            <span>
-              <a href={item.url}>{item.title}</a>
-            </span>
-            <span>{item.author}</span>
-            <span>{item.num_comments}</span>
-            <span>{item.points}</span>
-          </div>
-        );
-      })}
-    </div>
-  );
+export default class App extends Component {
+  render() {
+    return (
+      <div className="app">
+        <Security {...config}>
+          <Navigation />
+          <main>
+            <Route path="/" exact component={HomePage} />
+            <Route
+              path="/login"
+              render={() => <LoginPage baseUrl={config.url} />}
+            />
+            <Route path="/implicit/callback" component={ImplicitCallback} />
+            <Route path="/register" component={RegistrationForm} />
+            <SecureRoute path="/profile" component={ProfilePage} />
+          </main>
+        </Security>
+      </div>
+    );
+  }
 }
-
-export default App;
