@@ -1,5 +1,6 @@
 import React from "react";
 import { withAuth } from "@okta/okta-react";
+import SearchBar from "./SeachBar";
 
 export default withAuth(
   class ProfilePage extends React.Component {
@@ -23,8 +24,9 @@ export default withAuth(
         <section className="user-profile">
           <h1>User Profile</h1>
           <div>
-            <label>Name:</label>
+            <label>Welcome, </label>
             <span>{this.state.user.name}</span>
+            <SearchBar />
           </div>
         </section>
       );
