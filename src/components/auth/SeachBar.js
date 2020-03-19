@@ -24,6 +24,7 @@ class SeachBar extends Component {
   }
   // test localhost:3003/users/ api call
   handleSubmit(e) {
+    /*
     e.preventDefault();
     var id = this.state.year;
     fetch("http://localhost:3003/users/" + id)
@@ -32,6 +33,7 @@ class SeachBar extends Component {
         this.setState({ users: data });
       })
       .catch(console.log);
+      */
   }
   handleYearChange(e) {
     this.setState({ year: e.target.value });
@@ -48,12 +50,13 @@ class SeachBar extends Component {
   componentWillMount() {}
 
   componentDidMount() {
-    fetch("http://localhost:3003/users")
+    /*fetch("http://localhost:3003/users")
       .then(res => res.json())
       .then(data => {
         this.setState({ users: data });
       })
       .catch(console.log);
+      */
   }
 
   componentWillReceiveProps(nextProps) {}
