@@ -48,6 +48,7 @@ export default withAuth(
             <li>
               <Link to="/profile">Profile</Link>
             </li>
+              <li><Link to="/upload">Upload Questions</Link></li>
           </ul>
         );
       } else {

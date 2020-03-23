@@ -4,7 +4,6 @@ import topicList from "./PhysTopics.json";
 import classList from "./PhysClassNames.json";
 import semesterList from "./Semesters.json";
 import { locationsAreEqual } from "history";
-import UploadPage from "./UploadPage.js";
 
 class SeachBar extends Component {
   constructor(props) {
@@ -122,7 +121,6 @@ class SeachBar extends Component {
         <form onSubmit={this.handleSubmit}>
           <input id="submit" type="submit" value="Search" />
         </form>
-        <UploadPage />
         <ul>
           {this.state.users.map(eachUser => (
             <li key={eachUser.id}>{eachUser.name}</li>

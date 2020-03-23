@@ -37,7 +37,7 @@ class UploadPage extends Component {
     return (
       <div>
         <div class="container">
-          <label>Upload your file</label>
+          <label>Upload your file: </label>
           <input
             type="file"
             class="form-control"
