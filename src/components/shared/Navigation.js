@@ -1,4 +1,6 @@
 import React from "react";
+import {Nav, Navbar} from 'react-bootstrap';
+import Button from 'react-bootstrap/Button'
 import { withAuth } from "@okta/okta-react";
 import { Link } from "react-router-dom";
 /*
@@ -30,44 +32,29 @@ export default withAuth(
     // conditional render: if authenticated, show up log out
     render() {
       if (this.state.authenticated === null) return null;
-      let navBar = null;
-      if (this.state.authenticated) {
-        navBar = (
-          <ul className="nav-bar">
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <a
-                href="javascript:void(0)"
-                onClick={() => this.props.auth.logout()}
-              >
-                Log Out
-              </a>
-            </li>
-            <li>
-              <Link to="/profile">Profile</Link>
-            </li>
-          </ul>
-        );
-      } else {
-        navBar = (
-          <ul className="auth-nav">
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <a
-                href="javascript:void(0)"
-                onClick={() => this.props.auth.login()}
-              >
-                Sign In
-              </a>
-            </li>
-          </ul>
-        );
-      }
-      return <nav>{navBar}</nav>;
+      return (
+        <Navbar bg="dark" expand="lg" variant="dark" fixed="top">
+          <Link className = "navbar-brand"to= "/">Exam Stats</Link>
+          <Navbar.Toggle aria-controls="mainNavigation" />
+          <Navbar.Collapse id="mainNavigation">
+            <ul className="navbar-nav mr-auto">
+              <il className="nav-item">
+                  <Link className = "nav-link" to="/">Home</Link>
+                  
+              </il> 
+               {this.state.authenticated ? <il className="nav-item"><Link className="nav-link" to="/profile">Profile</Link></il>:''}
+            </ul>
+            <Nav>
+              {this.state.authenticated ? 
+              <Button variant="outline-danger" onClick = {() => this.props.auth.logout()}>Log Out</Button> :
+              <Button variant="outline-info" onClick = {() => this.props.auth.login()}>Log In</Button>}
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>); 
     }
   }
+
 );
+const navigationStyle = {
+
+}
