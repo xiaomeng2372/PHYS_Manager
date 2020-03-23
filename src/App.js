@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Route } from "react-router-dom";
 import { SecureRoute, ImplicitCallback } from "@okta/okta-react";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Navigation from "./components/shared/Navigation";
 import MainPage from "./components/home/MainPage";
