@@ -4,7 +4,7 @@ import topicList from "./PhysTopics.json";
 import classList from "./PhysClassNames.json";
 import semesterList from "./Semesters.json";
 import Table from 'react-bootstrap/Table';
-
+//TODO: 1. Added multiple filters 2. figure out how the logic of multiple filters
 import { locationsAreEqual } from "history";
 class SeachBar extends Component {
   constructor(props) {

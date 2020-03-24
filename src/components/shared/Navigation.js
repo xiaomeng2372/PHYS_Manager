@@ -43,6 +43,7 @@ export default withAuth(
                   
               </il> 
                {this.state.authenticated ? <il className="nav-item"><Link className="nav-link" to="/profile">Profile</Link></il>:''}
+              {this.state.authenticated ? <il className="nav-item"><Link className="nav-link" to="/upload">Upload</Link></il>:''}
             </ul>
             <Nav>
               {this.state.authenticated ? 
