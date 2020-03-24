@@ -3,19 +3,22 @@ import PropTypes from "prop-types";
 import topicList from "./PhysTopics.json";
 import classList from "./PhysClassNames.json";
 import semesterList from "./Semesters.json";
+import Table from 'react-bootstrap/Table';
+
 import { locationsAreEqual } from "history";
 class SeachBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      year: 4,
+      minYear: 1995,
+      maxYear: 2020,
       semester: "",
       topic: "",
       course: "",
-      users: []
+      questions: []
     };
 
-    //this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleYearChange = this.handleYearChange.bind(this);
     this.handleSemesterChange = this.handleSemesterChange.bind(this);
     this.handleTopicChange = this.handleTopicChange.bind(this);
@@ -24,19 +27,16 @@ class SeachBar extends Component {
   }
   // test localhost:3003/users/ api call
   handleSubmit(e) {
-    /*
     e.preventDefault();
-    var id = this.state.year;
-    fetch("http://localhost:3003/users/" + id)
+    fetch("http://localhost:3003/question")
       .then(res => res.json())
       .then(data => {
-        this.setState({ users: data });
+        this.setState({ questions: data });
       })
       .catch(console.log);
-      */
   }
   handleYearChange(e) {
-    this.setState({ year: e.target.value });
+    this.setState({ [e.target.id]: e.target.value });
   }
   handleSemesterChange(e) {
     this.setState({ semester: e.target.value });
@@ -50,20 +50,10 @@ class SeachBar extends Component {
   componentWillMount() {}
 
   componentDidMount() {
-    /*fetch("http://localhost:3003/users")
-      .then(res => res.json())
-      .then(data => {
-        this.setState({ users: data });
-      })
-      .catch(console.log);
-      */
+
   }
 
   componentWillReceiveProps(nextProps) {}
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
-  }
 
   componentWillUpdate(nextProps, nextState) {}
 
@@ -76,11 +66,18 @@ class SeachBar extends Component {
     return (
       <div className="searchContainer">
         <ul className="filterContainer">
-          <label>Year: </label>
+          <label>From: </label>
           <input
-            id="year"
+            id="minYear"
             type="number"
-            value={this.state.year}
+            value={this.state.minYear}
+            onChange={this.handleYearChange}
+          />
+          <label>To: </label>
+          <input
+            id="maxYear"
+            type="number"
+            value={this.state.maxYear}
             onChange={this.handleYearChange}
           />
           <label>Semester: </label>
@@ -123,11 +120,28 @@ class SeachBar extends Component {
         <form onSubmit={this.handleSubmit}>
           <input id="submit" type="submit" value="Search" />
         </form>
-        <ul>
-          {this.state.users.map(eachUser => (
-            <li key={eachUser.id}>{eachUser.name}</li>
+        <Table striped bordered hover size="sm">
+          <thead>
+          <tr>
+            <th>Question Number</th>
+            <th>Average</th>
+            <th>Standard Deviation</th>
+            <th>Correlation</th>
+            <th>Options</th>
+          </tr>
+          </thead>
+          <tbody>
+          {this.state.questions.map(eachQuestion => (
+            <tr>
+            <td>{eachQuestion.question_num}</td>
+            <td>{eachQuestion.avg}</td>
+            <td>{eachQuestion.std_dev}</td>
+              <td> {eachQuestion.correlation}</td>
+              <td><button id={eachQuestion.url}>View</button> <button id={eachQuestion.url}>Download</button> <button id={eachQuestion.url}>Like</button>  </td>
+            </tr>
           ))}
-        </ul>
+          </tbody>
+        </Table>
       </div>
     );
   }
