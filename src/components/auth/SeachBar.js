@@ -4,6 +4,7 @@ import topicList from "./PhysTopics.json";
 import classList from "./PhysClassNames.json";
 import semesterList from "./Semesters.json";
 import Table from 'react-bootstrap/Table';
+import axios from "axios";
 //TODO: 1. Added multiple filters 2. figure out how the logic of multiple filters
 import { locationsAreEqual } from "history";
 class SeachBar extends Component {
@@ -12,9 +13,9 @@ class SeachBar extends Component {
     this.state = {
       minYear: 1995,
       maxYear: 2020,
-      semester: "",
-      topic: "",
-      course: "",
+      semester: "SPRING",
+      topicId: 1,
+      course: "No Preference",
       questions: []
     };
 
@@ -28,12 +29,30 @@ class SeachBar extends Component {
   // test localhost:3003/users/ api call
   handleSubmit(e) {
     e.preventDefault();
-    fetch("http://localhost:3003/question")
-      .then(res => res.json())
-      .then(data => {
-        this.setState({ questions: data });
+
+    let bigYear = this.state.maxYear === "" ? 9999:this.state.maxYear;
+    let smallYear = this.state.minYear === "" ? 0:this.state.minYear;
+    let semester = this.state.semester === "No Preference" ? "no" : this.state.semester;
+    let course = this.state.course === "No Preference" ? "no" : this.state.course;
+    let topicId = this.state.topicId;
+    //var self = this;
+    axios.get('http://localhost:3003/all', {
+      params: {
+        minYear: smallYear,
+        maxYear: bigYear,
+        semester: semester,
+        topicId: topicId,
+        course: course,
+      }
+    })
+      .then((response) => {
+        console.log(response);
+        this.setState({questions: response.data})
       })
-      .catch(console.log);
+      .catch((error)=>{
+        console.log(error);
+      });
+
   }
   handleYearChange(e) {
     this.setState({ [e.target.id]: e.target.value });
@@ -42,7 +61,8 @@ class SeachBar extends Component {
     this.setState({ semester: e.target.value });
   }
   handleTopicChange(e) {
-    this.setState({ topic: e.target.value });
+    this.setState({ topicId: e.target.value });
+    alert(this.state.topicId)
   }
   handleCourseChange(e) {
     this.setState({ course: e.target.value });
@@ -72,6 +92,8 @@ class SeachBar extends Component {
             type="number"
             value={this.state.minYear}
             onChange={this.handleYearChange}
+            min="0"
+            max="9999"
           />
           <label>To: </label>
           <input
@@ -79,6 +101,8 @@ class SeachBar extends Component {
             type="number"
             value={this.state.maxYear}
             onChange={this.handleYearChange}
+            min="0"
+            max="9999"
           />
           <label>Semester: </label>
           <select
@@ -95,11 +119,11 @@ class SeachBar extends Component {
           <label> Topics: </label>
           <select
             id="topics"
-            value={this.state.topic}
+            value={this.state.topicId}
             onChange={this.handleTopicChange}
           >
             {topicList.map(eachTopic => (
-              <option key={eachTopic.topic} value={eachTopic.topic}>
+              <option key={eachTopic.topic} value={eachTopic.topicId}>
                 {eachTopic.topic}
               </option>
             ))}
@@ -132,7 +156,7 @@ class SeachBar extends Component {
           </thead>
           <tbody>
           {this.state.questions.map(eachQuestion => (
-            <tr>
+            <tr id={eachQuestion.id}>
             <td>{eachQuestion.question_num}</td>
             <td>{eachQuestion.avg}</td>
             <td>{eachQuestion.std_dev}</td>

@@ -4,11 +4,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@mikecousins/react-pdf": "^5.5.1",
     "@okta/okta-react": "^1.4.1",
     "@okta/okta-signin-widget": "^3.8.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.1",
     "@testing-library/user-event": "^7.2.1",
+    "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "express": "^4.17.1",
     "history": "^4.10.1",
