@@ -1,6 +1,5 @@
 {
   "name": "phys",
-  "proxy": "http://localhost:3001",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -17,11 +16,14 @@
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.17",
     "react-dom": "^16.12.0",
+    "react-pdf": "^4.1.0",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.0"
+    "react-scripts": "3.4.0",
+    "semantic-ui-react": "^0.88.2"
   },
   "scripts": {
+    "postinstall": "cp node_modules/pdfjs-dist/build/pdf.worker.min.js public/pdf.worker.min.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

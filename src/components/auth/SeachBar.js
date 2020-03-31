@@ -5,6 +5,10 @@ import classList from "./PhysClassNames.json";
 import semesterList from "./Semesters.json";
 import Table from 'react-bootstrap/Table';
 import axios from "axios";
+import PdfViewer from "./PdfViewer";
+import file1 from "./1.pdf"
+import file2 from "./2.pdf"
+import file3 from "./test.pdf"
 //TODO: 1. Added multiple filters 2. figure out how the logic of multiple filters
 import { locationsAreEqual } from "history";
 class SeachBar extends Component {
@@ -16,7 +20,9 @@ class SeachBar extends Component {
       semester: "SPRING",
       topicId: 1,
       course: "No Preference",
-      questions: []
+      questions: [],
+      fileInfo: null,
+      startingPage: 1
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,6 +31,7 @@ class SeachBar extends Component {
     this.handleTopicChange = this.handleTopicChange.bind(this);
     this.handleCourseChange = this.handleCourseChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleFileChange = this.handleFileChange.bind(this);
   }
   // test localhost:3003/users/ api call
   handleSubmit(e) {
@@ -67,11 +74,10 @@ class SeachBar extends Component {
   handleCourseChange(e) {
     this.setState({ course: e.target.value });
   }
-  componentWillMount() {}
-
-  componentDidMount() {
-
+  handleFileChange(e, fileName, startingPage){
+    this.setState({fileInfo: fileName, startingPage: startingPage});
   }
+
 
   componentWillReceiveProps(nextProps) {}
 
@@ -166,6 +172,12 @@ class SeachBar extends Component {
           ))}
           </tbody>
         </Table>
+        <div>
+          <button onClick={(e) =>this.handleFileChange(e, file1, 2)}> View PDF1 Pg2</button>
+          <button onClick={(e) => this.handleFileChange(e,file2, 1)}> View PDF2 Pg1</button>
+          <button onClick={(e) => this.handleFileChange(e,file3, 3)}> View PDF3 Pg3</button>
+          <PdfViewer fileInfo={this.state.fileInfo} pgNumber={this.state.startingPage}/>
+        </div>
       </div>
     );
   }
