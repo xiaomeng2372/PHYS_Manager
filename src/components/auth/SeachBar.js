@@ -175,7 +175,7 @@ class SeachBar extends Component {
         <div>
           <button onClick={(e) =>this.handleFileChange(e, file1, 2)}> View PDF1 Pg2</button>
           <button onClick={(e) => this.handleFileChange(e,file2, 1)}> View PDF2 Pg1</button>
-          <button onClick={(e) => this.handleFileChange(e,file3, 3)}> View PDF3 Pg3</button>
+          <button onClick={(e) => this.handleFileChange(e,file3, 2)}> View PDF3 Pg2</button>
           <PdfViewer fileInfo={this.state.fileInfo} pgNumber={this.state.startingPage}/>
         </div>
       </div>
