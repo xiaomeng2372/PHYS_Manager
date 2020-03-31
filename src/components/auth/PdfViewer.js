@@ -9,9 +9,9 @@ class PdfViewer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      fileInfo: props.fileInfo,
+      fileInfo: null, //props.fileInfo,
       numPages: 0, // total number of pages
-      pgNumber: props.pgNumber, // ith page
+      pgNumber: 1, // ith page
       loadSuccess: false
     };
     this.handleFileChange = this.handleFileChange.bind(this);
@@ -19,7 +19,7 @@ class PdfViewer extends React.Component {
     this.goToNextPage = this.goToNextPage.bind(this);
   }
   handleFileChange = (e) => {
-    alert(this.state.pgNumber);
+    //alert(this.state.pgNumber);
     this.setState({fileInfo: e.target.files[0]});
   };
 
@@ -57,7 +57,7 @@ class PdfViewer extends React.Component {
         <Grid centered columns={2}>
           <Grid.Column textAlign="center">
 
-            <Document file={this.state.fileInfo} onLoadSuccess={this.loadDocumentSuccess} noData={<h4>Please select a file</h4>}>
+            <Document file={this.state.fileInfo} onLoadSuccess={this.loadDocumentSuccess} noData={<h3>Please select a pdf file to upload and preview</h3>}>
               <Page pageNumber={pgNumber} />
             </Document>
 

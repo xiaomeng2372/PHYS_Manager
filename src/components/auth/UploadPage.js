@@ -1,20 +1,21 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
-//import PdfViewer from "./PdfViewer"
+import PdfViewer from "./PdfViewer"
 class UploadPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedFile: null
     };
-    this.onChangeHandler = this.onChangeHandler.bind(this);
+   // this.onChangeHandler = this.onChangeHandler.bind(this);
     this.onClickHandle = this.onClickHandle.bind(this);
   }
+  /*
   onChangeHandler(e) {
     this.setState({ selectedFile: e.target.files[0], loaded: 0 });
   }
-
+*/
   onClickHandle(e) {
     e.preventDefault();
     /*
@@ -33,17 +34,10 @@ class UploadPage extends Component {
   render() {
     return (
         <section className="UploadContainer">
-          <h1> Upload Page</h1>
-          <label>Upload your file: </label>
-          <input
-            type="file"
-            class="form-control"
-            multiple=""
-            name="file"
-            onChange={this.onChangeHandler}
-          />
+          <h1> PlaceHolder</h1>
+          <PdfViewer/>
           <button type="button" onClick={this.onClickHandle}>
-            Upload
+            Submit File
           </button>
         </section>
     );
