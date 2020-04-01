@@ -57,7 +57,7 @@ class PdfViewer extends React.Component {
         <Grid centered columns={2}>
           <Grid.Column textAlign="center">
 
-            <Document file={this.state.fileInfo} onLoadSuccess={this.loadDocumentSuccess} noData={<h3>Please select a pdf file to upload and preview</h3>}>
+            <Document file={this.state.fileInfo} onLoadSuccess={this.loadDocumentSuccess} noData={<h3>PDF Preview</h3>}>
               <Page pageNumber={pgNumber} />
             </Document>
 

@@ -4,13 +4,29 @@ import topicList from "./PhysTopics.json";
 import classList from "./PhysClassNames.json";
 import semesterList from "./Semesters.json";
 import Table from 'react-bootstrap/Table';
+import Button from '@material-ui/core/Button';
 import axios from "axios";
 import PdfViewer from "./PdfViewer";
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 import file1 from "./1.pdf"
 import file2 from "./2.pdf"
 import file3 from "./test.pdf"
 //TODO: 1. Added multiple filters 2. figure out how the logic of multiple filters
 import { locationsAreEqual } from "history";
+import { lightBlue } from "@material-ui/core/colors";
+const useStyles = {
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    //padding: theme.spacing(1),
+    textAlign: 'center',
+    color: lightBlue,
+  },
+};
+
 class SeachBar extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +46,6 @@ class SeachBar extends Component {
     this.handleSemesterChange = this.handleSemesterChange.bind(this);
     this.handleTopicChange = this.handleTopicChange.bind(this);
     this.handleCourseChange = this.handleCourseChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleFileChange = this.handleFileChange.bind(this);
   }
   // test localhost:3003/users/ api call
@@ -78,14 +93,18 @@ class SeachBar extends Component {
     this.setState({fileInfo: fileName, startingPage: startingPage});
   }
 
+  //Initial API call
 
-  componentWillReceiveProps(nextProps) {}
-
-  componentWillUpdate(nextProps, nextState) {}
-
-  componentDidUpdate(prevProps, prevState) {}
-
-  componentWillUnmount() {}
+  componentDidMount() {
+    axios.get('http://localhost:3003/question')
+      .then((response) => {
+        console.log(response);
+        this.setState({questions: response.data, fileInfo: file2})
+      })
+      .catch((error)=>{
+        console.log(error);
+      });
+  }
 
   render() {
     //const topics = topicList;
@@ -148,8 +167,12 @@ class SeachBar extends Component {
           </select>
         </ul>
         <form onSubmit={this.handleSubmit}>
-          <input id="submit" type="submit" value="Search" />
+          <Button variant="contained" type="submit" color="primary">
+            Search
+          </Button>
         </form>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6}>
         <Table striped bordered hover size="sm">
           <thead>
           <tr>
@@ -167,17 +190,22 @@ class SeachBar extends Component {
             <td>{eachQuestion.avg}</td>
             <td>{eachQuestion.std_dev}</td>
               <td> {eachQuestion.correlation}</td>
-              <td><button id={eachQuestion.url}>View</button> <button id={eachQuestion.url}>Download</button> <button id={eachQuestion.url}>Like</button>  </td>
+              <td>
+                <button id={eachQuestion.url} onClick={(e) =>this.handleFileChange(e, file1, 1)}>View</button>
+                <button id={eachQuestion.url} onClick={(e) =>this.handleFileChange(e, file1, 2)}>View Page2</button>
+                <button id={eachQuestion.url} onClick={(e) =>this.handleFileChange(e, file3, 2)}>View Another Doc </button>
+              </td>
             </tr>
           ))}
           </tbody>
         </Table>
-        <div>
-          <button onClick={(e) =>this.handleFileChange(e, file1, 2)}> View PDF1 Pg2</button>
-          <button onClick={(e) => this.handleFileChange(e,file2, 1)}> View PDF2 Pg1</button>
-          <button onClick={(e) => this.handleFileChange(e,file3, 2)}> View PDF3 Pg2</button>
-          <PdfViewer fileInfo={this.state.fileInfo} pgNumber={this.state.startingPage}/>
-        </div>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Paper className={useStyles.paper}>
+            <PdfViewer fileInfo={this.state.fileInfo} pgNumber={this.state.startingPage}/>
+            </Paper>
+          </Grid>
+        </Grid>
       </div>
     );
   }
